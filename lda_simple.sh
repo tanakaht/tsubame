@@ -31,7 +31,7 @@ if not os.path.exists(savepath):
 
 def writelog(s):
     with open(logpath, 'a') as f:
-        f.write('{}:{}'.format(time(), s))
+        f.write('{}:{}\n'.format(time(), s))
 
 
 def printer(ldamodel, path):
@@ -105,4 +105,4 @@ if __name__ == '__main__':
 
 %_End_of_Python
 
-date '+%H:%M:%S:finish job' >> $PWD/data/models/lda/tsbame_simple/log.txt
+date '+%H:%M:%S:finish job' >> $PWD/data/models/lda/tsubame_simple/log.txt

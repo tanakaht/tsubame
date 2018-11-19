@@ -6,12 +6,12 @@
 #$ -m beas
 #$ -N lda_scratch
 
-date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsbame_scratch/log.txt
-
 mkdir $PWD/data/models/lda/tsubame_scratch
+date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsubame_scratch/log.txt
+
 # 計算に必要な入力ファイルのコピー
 date '+%H:%M:%S:start copying dataset' >> $PWD/data/models/lda/tsubame_scratch/log.txt
-cp -rp $PWD/data/corpus $TMPDIR/corpus
+cp -rp $PWD/data/models/lda/corpus $TMPDIR/corpus
 date '+%H:%M:%S:finish copying dataset' >> $PWD/data/models/lda/tsubame_scratch/log.txt
 echo $TMPDIR >> $PWD/data/scratchpath.txt
 
@@ -40,7 +40,7 @@ if not os.path.exists(savepath):
 
 def writelog(s):
     with open(logpath, 'a') as f:
-        f.write('{}:{}'.format(time(), s))
+        f.write('{}:{}\n'.format(time(), s))
 
 
 def printer(ldamodel, path):

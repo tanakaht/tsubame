@@ -6,7 +6,7 @@
 #$ -m beas
 #$ -N lda_simple
 
-
+mkdir $PWD/data/models/lda/tsbame_simple
 date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsbame_simple/log.txt
 
 source activate py37

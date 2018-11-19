@@ -10,7 +10,7 @@ date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsbame_scratch/log.txt
 
 source activate py37
 
-
+mkdir $PWD/data/models/lda/tsbame_scratch
 # 計算に必要な入力ファイルのコピー
 date '+%H:%M:%S:start copying dataset' >> $PWD/data/models/lda/tsbame_scratch/log.txt
 cp -rp $PWD/data/corpus $TMPDIR/corpus

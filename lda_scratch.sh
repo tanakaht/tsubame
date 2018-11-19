@@ -4,23 +4,21 @@
 #$ -l f_node=1 -l h_rt=0:10:0
 #$ -M hirohtht@gmail.com
 #$ -m beas
-#$ -N lda_simple
+#$ -N lda_scratch
 
 date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsbame_scratch/log.txt
 
-source activate py37
-
-mkdir $PWD/data/models/lda/tsbame_scratch
+mkdir $PWD/data/models/lda/tsubame_scratch
 # 計算に必要な入力ファイルのコピー
-date '+%H:%M:%S:start copying dataset' >> $PWD/data/models/lda/tsbame_scratch/log.txt
+date '+%H:%M:%S:start copying dataset' >> $PWD/data/models/lda/tsubame_scratch/log.txt
 cp -rp $PWD/data/corpus $TMPDIR/corpus
-date '+%H:%M:%S:finish copying dataset' >> $PWD/data/models/lda/tsbame_scratch/log.txt
+date '+%H:%M:%S:finish copying dataset' >> $PWD/data/models/lda/tsubame_scratch/log.txt
 echo $TMPDIR >> $PWD/data/scratchpath.txt
 
 
-# Start python
-python << %_End_of_Python
-
+# Start python under anaconda env
+~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python << %_End_of_Python
+# -*- coding: utf-8 -*-
 from gensim import corpora, models
 import os
 import multiprocessing
@@ -63,7 +61,7 @@ if __name__ == '__main__':
     doc_count, word_count = corpus.num_docs, len(dictionary)
 
     # loggerの起動(single)
-    cmd = "python cpu_logger.py {}cpu_log_single.md".format(savepath)
+    cmd = "~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python cpu_logger.py {}cpu_log_single.md".format(savepath)
     proc = Popen(cmd, shell=True)
 
     writelog('start lda(single)')
@@ -81,7 +79,7 @@ if __name__ == '__main__':
     # loggerの終了
     proc.terminate()
     # loggerの起動(multi)
-    cmd = "python cpu_logger.py {}cpu_log_multi.md".format(savepath)
+    cmd = "~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python cpu_logger.py {}cpu_log_multi.md".format(savepath)
     proc = Popen(cmd, shell=True)
 
     writelog('start lda(multi)')
@@ -116,8 +114,8 @@ if __name__ == '__main__':
 
 %_End_of_Python
 
-date '+%H:%M:%S:start copying result' >> $PWD/data/models/lda/tsbame_scratch/log.txt
+date '+%H:%M:%S:start copying result' >> $PWD/data/models/lda/tsubame_scratch/log.txt
 cp –rp $TMPDIR/result/tsbame_scratch $PWD/data/models/lda/tsubame_scratch
-date '+%H:%M:%S:start copying result' >> $PWD/data/models/lda/tsbame_scratch/log.txt
+date '+%H:%M:%S:start copying result' >> $PWD/data/models/lda/tsubame_scratch/log.txt
 
-date '+%H:%M:%S:finish job' >> $PWD/data/models/lda/tsbame_scratch/log.txt
+date '+%H:%M:%S:finish job' >> $PWD/data/models/lda/tsubame_scratch/log.txt

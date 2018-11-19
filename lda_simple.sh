@@ -6,14 +6,13 @@
 #$ -m beas
 #$ -N lda_simple
 
-mkdir $PWD/data/models/lda/tsbame_simple
-date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsbame_simple/log.txt
+mkdir $PWD/data/models/lda/tsubame_simple
+date '+%H:%M:%S:start job' >> $PWD/data/models/lda/tsubame_simple/log.txt
 
-source activate py37
 
-# Start python
-python << %_End_of_Python
-
+# Start python under anaconda env
+~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python << %_End_of_Python
+# -*- coding: utf-8 -*-
 from gensim import corpora, models
 import os
 import multiprocessing
@@ -22,7 +21,7 @@ from subprocess import Popen
 
 mainpath = os.path.dirname(os.path.abspath(__file__))
 corpuspath = mainpath + '/data/models/lda/corpus/'
-savepath = mainpath + '/data/models/lda/macmini_tmp/'
+savepath = mainpath + '/data/models/lda/tsubame_simple/'
 logpath = savepath + 'eventlog.md'
 t_start = time()
 
@@ -53,7 +52,7 @@ if __name__ == '__main__':
     doc_count, word_count = corpus.num_docs, len(dictionary)
 
     # loggerの起動(single)
-    cmd = "python cpu_logger.py {}cpu_log_single.md".format(savepath)
+    cmd = "~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python cpu_logger.py {}cpu_log_single.md".format(savepath)
     proc = Popen(cmd, shell=True)
 
     writelog('start lda(single)')
@@ -71,7 +70,7 @@ if __name__ == '__main__':
     # loggerの終了
     proc.terminate()
     # loggerの起動(multi)
-    cmd = "python cpu_logger.py {}cpu_log_multi.md".format(savepath)
+    cmd = "~/.pyenv/versions/anaconda3-5.3.0/envs/py37/bin/python cpu_logger.py {}cpu_log_multi.md".format(savepath)
     proc = Popen(cmd, shell=True)
 
     writelog('start lda(multi)')
@@ -105,7 +104,5 @@ if __name__ == '__main__':
 
 
 %_End_of_Python
-
-date "Batch Job ($0) finishing"; date
 
 date '+%H:%M:%S:finish job' >> $PWD/data/models/lda/tsbame_simple/log.txt
